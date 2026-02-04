@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Đề Thi Lập Trình Web - 710-MSSV</title>
+    <link rel="stylesheet" href="css/style.css">
+    <style>
+        .hero {
+            text-align: center;
+            padding: 60px 20px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            border-radius: 15px;
+            color: white;
+            margin-bottom: 40px;
+        }
+
+        .hero h1 {
+            font-size: 3em;
+            margin-bottom: 10px;
+        }
+
+        .hero p {
+            font-size: 1.2em;
+            opacity: 0.9;
+        }
+
+        .menu-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 25px;
+            margin: 40px 0;
+        }
+
+        .menu-card {
+            background: white;
+            border-radius: 12px;
+            padding: 30px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+            text-align: center;
+        }
+
+        .menu-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 10px 30px rgba(102, 126, 234, 0.3);
+        }
+
+        .menu-card h3 {
+            color: #667eea;
+            margin-bottom: 15px;
+            font-size: 1.5em;
+        }
+
+        .menu-card p {
+            color: #666;
+            margin-bottom: 20px;
+            line-height: 1.6;
+        }
+
+        .menu-card a {
+            display: inline-block;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 12px 30px;
+            border-radius: 5px;
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+
+        .menu-card a:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
+        }
+
+        .info-section {
+            background: #f8f9fa;
+            padding: 30px;
+            border-radius: 10px;
+            margin: 40px 0;
+        }
+
+        .info-section h2 {
+            color: #333;
+            margin-bottom: 20px;
+        }
+
+        .info-section ul {
+            list-style: none;
+            padding-left: 0;
+        }
+
+        .info-section ul li {
+            padding: 10px 0;
+            border-bottom: 1px solid #ddd;
+        }
+
+        .info-section ul li:before {
+            content: "✓ ";
+            color: #667eea;
+            font-weight: bold;
+            margin-right: 10px;
+        }
+
+        .student-info {
+            background: white;
+            border-left: 5px solid #667eea;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 5px;
+        }
+
+        .student-info strong {
+            color: #667eea;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="hero fade-in">
+            <h1>🎓 ĐỀ THI LẬP TRÌNH WEB</h1>
+            <p>Đề số 1 - Thời gian: 180 phút</p>
+        </div>
+
+        <nav>
+            <ul>
+                <li><a href="index.html">🏠 Trang chủ</a></li>
+                <li><a href="baitap01.html">📦 Bài 1: Sản phẩm</a></li>
+                <li><a href="baitap02.html">📝 Bài 2: Form đăng ký</a></li>
+                <li><a href="baitap03.html">⏱️ Bài 3: Countdown</a></li>
+                <li><a href="about.html">ℹ️ Giới thiệu</a></li>
+                <li><a href="contact.html">📧 Liên hệ</a></li>
+            </ul>
+        </nav>
+
+        <main>
+            <div class="student-info fade-in">
+                <p><strong>Sinh viên:</strong> Nguyễn Văn A</p>
+                <p><strong>MSSV:</strong> 710-MSSV</p>
+                <p><strong>Lớp:</strong> DHTH17A</p>
+                <p><strong>Ngày nộp:</strong> <span id="currentDate"></span></p>
+            </div>
+
+            <section class="content-section">
+                <h2>📚 Danh sách bài tập thực hành</h2>
+                <div class="menu-grid">
+                    <div class="menu-card fade-in">
+                        <h3>🛒 Bài tập 1</h3>
+                        <p>Danh sách sản phẩm với chức năng tìm kiếm. Sử dụng JavaScript để filter sản phẩm theo tên, responsive layout với CSS Grid.</p>
+                        <a href="baitap01.html">Xem bài làm →</a>
+                    </div>
+
+                    <div class="menu-card fade-in">
+                        <h3>📋 Bài tập 2</h3>
+                        <p>Form đăng ký người dùng với validation email, mật khẩu. Lưu dữ liệu vào LocalStorage và hiển thị thông báo.</p>
+                        <a href="baitap02.html">Xem bài làm →</a>
+                    </div>
+
+                    <div class="menu-card fade-in">
+                        <h3>⏰ Bài tập 3</h3>
+                        <p>Đồng hồ đếm ngược 10 phút với animation khi dưới 1 phút. Sử dụng setInterval và xử lý memory leak.</p>
+                        <a href="baitap03.html">Xem bài làm →</a>
+                    </div>
+                </div>
+            </section>
+
+            <section class="info-section fade-in">
+                <h2>📝 Cấu trúc đề thi</h2>
+                <ul>
+                    <li><strong>Phần Lý thuyết (40 điểm):</strong> Giải thích CSS position, Domain & Hosting, JavaScript scope & hoisting, Event Delegation</li>
+                    <li><strong>Phần Thực hành (60 điểm):</strong> 3 bài tập code HTML/CSS/JavaScript</li>
+                    <li><strong>Thời gian:</strong> 180 phút</li>
+                    <li><strong>Hình thức:</strong> Mở (cho phép sử dụng tài liệu)</li>
+                </ul>
+            </section>
+
+            <section class="info-section fade-in">
+                <h2>🚀 Công nghệ sử dụng</h2>
+                <ul>
+                    <li>HTML5 - Cấu trúc semantic</li>
+                    <li>CSS3 - Flexbox, Grid, Animation</li>
+                    <li>JavaScript ES6+ - DOM, Event, LocalStorage</li>
+                    <li>Responsive Design - Mobile-first approach</li>
+                    <li>GitHub Pages - Deployment</li>
+                </ul>
+            </section>
+        </main>
+
+        <footer>
+            <p>&copy; 2026 - Đề thi Lập trình Web | 710-MSSV</p>
+            <p>Made with ❤️ by Student</p>
+        </footer>
+    </div>
+
+    <script src="js/script.js"></script>
+    <script>
+        // Hiển thị ngày hiện tại
+        document.getElementById('currentDate').textContent = new Date().toLocaleDateString('vi-VN', {
+            year: 'numeric',
+            month: 'long',
+            day: 'numeric'
+        });
+    </script>
+</body>
+</html>

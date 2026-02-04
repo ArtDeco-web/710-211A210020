@@ -1,0 +1,397 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Giới thiệu - 710-MSSV</title>
+    <link rel="stylesheet" href="css/style.css">
+    <style>
+        .about-hero {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 80px 40px;
+            border-radius: 15px;
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        .about-hero h1 {
+            font-size: 3em;
+            margin-bottom: 20px;
+        }
+
+        .about-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            margin: 40px 0;
+        }
+
+        .info-card {
+            background: white;
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .info-card h3 {
+            color: #667eea;
+            margin-bottom: 15px;
+            font-size: 1.5em;
+        }
+
+        .info-card p {
+            line-height: 1.8;
+            color: #666;
+        }
+
+        .theory-section {
+            background: #f8f9fa;
+            padding: 40px;
+            border-radius: 15px;
+            margin: 40px 0;
+        }
+
+        .theory-section h2 {
+            color: #667eea;
+            margin-bottom: 30px;
+            text-align: center;
+        }
+
+        .theory-item {
+            background: white;
+            padding: 25px;
+            border-radius: 10px;
+            margin-bottom: 25px;
+            border-left: 5px solid #667eea;
+        }
+
+        .theory-item h3 {
+            color: #333;
+            margin-bottom: 15px;
+        }
+
+        .theory-item h4 {
+            color: #667eea;
+            margin: 20px 0 10px 0;
+        }
+
+        .theory-item ul {
+            margin-left: 25px;
+            line-height: 1.8;
+        }
+
+        .theory-item code {
+            background: #f4f4f4;
+            padding: 2px 6px;
+            border-radius: 3px;
+            font-family: 'Courier New', monospace;
+        }
+
+        .code-example {
+            background: #2d2d2d;
+            color: #f8f8f2;
+            padding: 20px;
+            border-radius: 8px;
+            overflow-x: auto;
+            margin: 15px 0;
+            font-family: 'Courier New', monospace;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="about-hero fade-in">
+            <h1>ℹ️ Giới thiệu</h1>
+            <p>Đề thi Lập trình Web - Đề số 1</p>
+        </div>
+
+        <nav>
+            <ul>
+                <li><a href="index.html">🏠 Trang chủ</a></li>
+                <li><a href="baitap01.html">📦 Bài 1: Sản phẩm</a></li>
+                <li><a href="baitap02.html">📝 Bài 2: Form đăng ký</a></li>
+                <li><a href="baitap03.html">⏱️ Bài 3: Countdown</a></li>
+                <li><a href="about.html">ℹ️ Giới thiệu</a></li>
+                <li><a href="contact.html">📧 Liên hệ</a></li>
+            </ul>
+        </nav>
+
+        <main>
+            <section class="about-content">
+                <div class="info-card fade-in">
+                    <h3>📚 Về đề thi</h3>
+                    <p><strong>Môn học:</strong> Lập trình Web</p>
+                    <p><strong>Đề số:</strong> 1</p>
+                    <p><strong>Thời gian:</strong> 180 phút</p>
+                    <p><strong>Hình thức:</strong> Thi mở</p>
+                    <p>Đề thi bao gồm phần lý thuyết (40 điểm) và phần thực hành (60 điểm), yêu cầu sinh viên vận dụng kiến thức HTML, CSS, JavaScript để giải quyết các bài toán thực tế.</p>
+                </div>
+
+                <div class="info-card fade-in">
+                    <h3>👨‍🎓 Thông tin sinh viên</h3>
+                    <p><strong>Họ và tên:</strong> Nguyễn Văn A</p>
+                    <p><strong>MSSV:</strong> 710-MSSV</p>
+                    <p><strong>Lớp:</strong> DHTH17A</p>
+                    <p><strong>Khoa:</strong> Công nghệ Thông tin</p>
+                    <p>Sinh viên năm 3, chuyên ngành Công nghệ phần mềm, đam mê lập trình web và phát triển ứng dụng.</p>
+                </div>
+
+                <div class="info-card fade-in">
+                    <h3>💻 Công nghệ sử dụng</h3>
+                    <p><strong>Frontend:</strong></p>
+                    <ul>
+                        <li>HTML5 - Semantic markup</li>
+                        <li>CSS3 - Flexbox, Grid, Animation</li>
+                        <li>JavaScript ES6+ - Modern syntax</li>
+                    </ul>
+                    <p><strong>Tools:</strong></p>
+                    <ul>
+                        <li>VS Code - Code editor</li>
+                        <li>GitHub - Version control</li>
+                        <li>GitHub Pages - Deployment</li>
+                    </ul>
+                </div>
+            </section>
+
+            <section class="theory-section">
+                <h2>📖 Phần Lý Thuyết (40 điểm)</h2>
+
+                <div class="theory-item fade-in">
+                    <h3>Câu 1: CSS Position - absolute vs relative (10 điểm)</h3>
+                    
+                    <h4>🔹 position: relative</h4>
+                    <ul>
+                        <li>Element được định vị <strong>relative to itself</strong> (tương đối với vị trí ban đầu)</li>
+                        <li>Vẫn giữ vị trí trong document flow (các element khác không bị ảnh hưởng)</li>
+                        <li>Sử dụng top, right, bottom, left để di chuyển từ vị trí gốc</li>
+                        <li>Thường dùng làm <strong>containing block</strong> cho absolute children</li>
+                    </ul>
+
+                    <h4>🔹 position: absolute</h4>
+                    <ul>
+                        <li>Element được định vị <strong>relative to nearest positioned ancestor</strong></li>
+                        <li>Bị loại khỏi document flow (không chiếm không gian)</li>
+                        <li>Nếu không có positioned ancestor → relative to viewport</li>
+                        <li>Dùng để tạo overlays, tooltips, dropdowns</li>
+                    </ul>
+
+                    <h4>💡 Ví dụ responsive layout:</h4>
+                    <div class="code-example">
+&lt;!-- HTML --&gt;
+&lt;div class="container"&gt; &lt;!-- relative --&gt;
+  &lt;div class="badge"&gt;New&lt;/div&gt; &lt;!-- absolute --&gt;
+  &lt;img src="product.jpg" alt="Product"&gt;
+&lt;/div&gt;
+
+&lt;!-- CSS --&gt;
+.container {
+  position: relative;
+  width: 100%;
+  max-width: 400px;
+}
+
+.badge {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  background: red;
+  color: white;
+  padding: 5px 10px;
+}
+
+/* Responsive: Badge tự động điều chỉnh theo container */
+@media (max-width: 768px) {
+  .badge {
+    top: 5px;
+    right: 5px;
+    font-size: 12px;
+  }
+}
+                    </div>
+
+                    <h4>📱 Ảnh hưởng đến Deploy & Hosting:</h4>
+                    <ul>
+                        <li>Position không ảnh hưởng đến file size hay performance server</li>
+                        <li>Absolute positioning có thể gây vấn đề trên các thiết bị khác nhau nếu không test kỹ</li>
+                        <li>Cần test trên nhiều viewport sizes trước khi deploy</li>
+                        <li>Dùng relative units (%, vh, vw) thay vì px cho responsive tốt hơn</li>
+                    </ul>
+                </div>
+
+                <div class="theory-item fade-in">
+                    <h3>Câu 2: Domain & Hosting cho JavaScript Website (10 điểm)</h3>
+                    
+                    <h4>🔹 Quy trình đăng ký Domain & Hosting:</h4>
+                    <ol style="line-height: 1.8;">
+                        <li><strong>Đăng ký Domain:</strong> Chọn nhà cung cấp (GoDaddy, Namecheap, etc.) → Tìm domain khả dụng → Thanh toán (thường $10-15/năm)</li>
+                        <li><strong>Chọn Hosting:</strong> Shared hosting, VPS, hoặc Cloud hosting tùy nhu cầu</li>
+                        <li><strong>Cấu hình DNS:</strong> Trỏ domain về server hosting thông qua DNS records</li>
+                        <li><strong>Upload code:</strong> FTP/SFTP hoặc Git để deploy website</li>
+                        <li><strong>Test:</strong> Kiểm tra domain đã hoạt động (có thể mất 24-48h propagate DNS)</li>
+                    </ol>
+
+                    <h4>🔹 Vai trò của DNS:</h4>
+                    <ul>
+                        <li><strong>Domain Name System:</strong> "Danh bạ điện thoại của internet"</li>
+                        <li>Chuyển đổi tên miền (example.com) thành IP address (192.168.1.1)</li>
+                        <li><strong>DNS Records:</strong> A record (IPv4), AAAA (IPv6), CNAME (alias), MX (email)</li>
+                        <li><strong>TTL (Time To Live):</strong> Thời gian cache DNS, thường 3600s (1h)</li>
+                    </ul>
+
+                    <h4>🛠️ 2 Công cụ deploy không cần server:</h4>
+                    <ul>
+                        <li>
+                            <strong>GitHub Pages:</strong>
+                            <ul>
+                                <li>Miễn phí, chỉ cần push code lên GitHub repo</li>
+                                <li>Hỗ trợ custom domain (CNAME file)</li>
+                                <li>HTTPS tự động (Let's Encrypt)</li>
+                                <li>Chỉ host static sites (HTML/CSS/JS)</li>
+                            </ul>
+                        </li>
+                        <li>
+                            <strong>Netlify:</strong>
+                            <ul>
+                                <li>Deploy tự động từ Git (GitHub, GitLab, Bitbucket)</li>
+                                <li>CDN global, HTTPS miễn phí</li>
+                                <li>Form handling, Functions (serverless)</li>
+                                <li>Continuous Deployment (auto redeploy khi push code)</li>
+                            </ul>
+                        </li>
+                    </ul>
+
+                    <h4>⚠️ Rủi ro bảo mật:</h4>
+                    <ul>
+                        <li><strong>Không dùng HTTPS:</strong> Dữ liệu truyền plain text → dễ bị tấn công Man-in-the-Middle</li>
+                        <li><strong>Lộ API keys:</strong> Hardcode keys trong JS → ai cũng xem được trong source code</li>
+                        <li><strong>CORS misconfiguration:</strong> Allow all origins (*) → vulnerable to CSRF attacks</li>
+                        <li><strong>Outdated dependencies:</strong> Không update libraries → có thể bị exploit</li>
+                    </ul>
+                </div>
+
+                <div class="theory-item fade-in">
+                    <h3>Câu 3: JavaScript - let, const, var (10 điểm)</h3>
+                    
+                    <h4>🔹 So sánh Scope:</h4>
+                    <ul>
+                        <li><strong>var:</strong> Function-scoped (scope là function gần nhất)</li>
+                        <li><strong>let & const:</strong> Block-scoped (scope là {} block gần nhất)</li>
+                    </ul>
+
+                    <h4>🔹 Hoisting:</h4>
+                    <ul>
+                        <li><strong>var:</strong> Hoisted và initialized với undefined</li>
+                        <li><strong>let & const:</strong> Hoisted nhưng ở Temporal Dead Zone (TDZ) → không thể access trước khi declare</li>
+                    </ul>
+
+                    <h4>💡 Ví dụ lỗi thường gặp:</h4>
+                    <div class="code-example">
+// ❌ LỖI 1: var trong loop
+for (var i = 0; i &lt; 3; i++) {
+  setTimeout(() =&gt; console.log(i), 1000);
+}
+// Output: 3, 3, 3 (vì var là function-scoped)
+
+// ✅ FIX: Dùng let
+for (let i = 0; i &lt; 3; i++) {
+  setTimeout(() =&gt; console.log(i), 1000);
+}
+// Output: 0, 1, 2 (let tạo scope mới mỗi iteration)
+
+// ❌ LỖI 2: const với object
+const user = { name: 'John' };
+user = { name: 'Jane' }; // Error: Assignment to constant
+
+// ✅ FIX: const không immutable object, chỉ reference
+const user = { name: 'John' };
+user.name = 'Jane'; // OK
+Object.freeze(user); // Để thật sự immutable
+
+// ❌ LỖI 3: Temporal Dead Zone
+console.log(myLet); // ReferenceError
+let myLet = 5;
+                    </div>
+
+                    <h4>🔧 Debug với Chrome DevTools:</h4>
+                    <ul>
+                        <li><strong>Console tab:</strong> Xem error messages, test expressions</li>
+                        <li><strong>Sources tab → Breakpoints:</strong> Pause code để inspect variables</li>
+                        <li><strong>Scope panel:</strong> Xem Local, Block, Global scopes</li>
+                        <li><strong>Watch expressions:</strong> Monitor variable changes</li>
+                    </ul>
+                </div>
+
+                <div class="theory-item fade-in">
+                    <h3>Câu 4: Event Delegation trong JavaScript (10 điểm)</h3>
+                    
+                    <h4>🔹 Khái niệm:</h4>
+                    <p>Event Delegation là kỹ thuật gắn event listener vào <strong>parent element</strong> thay vì từng child element, tận dụng <strong>event bubbling</strong> để xử lý events từ children.</p>
+
+                    <h4>🔹 Nguyên lý hoạt động:</h4>
+                    <ul>
+                        <li><strong>Event Bubbling:</strong> Event lan truyền từ child → parent → grandparent... đến document</li>
+                        <li><strong>event.target:</strong> Element thực sự trigger event (child)</li>
+                        <li><strong>event.currentTarget:</strong> Element có event listener (parent)</li>
+                    </ul>
+
+                    <h4>💡 Ví dụ với Dynamic List:</h4>
+                    <div class="code-example">
+&lt;!-- HTML --&gt;
+&lt;ul id="todoList"&gt;
+  &lt;li&gt;Task 1 &lt;button class="delete"&gt;Delete&lt;/button&gt;&lt;/li&gt;
+  &lt;li&gt;Task 2 &lt;button class="delete"&gt;Delete&lt;/button&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;button id="addTask"&gt;Add New Task&lt;/button&gt;
+
+&lt;!-- JavaScript --&gt;
+// ❌ KHÔNG TỐT: Gắn listener cho từng button
+document.querySelectorAll('.delete').forEach(btn =&gt; {
+  btn.addEventListener('click', function() {
+    this.parentElement.remove();
+  });
+});
+// Vấn đề: Buttons mới thêm sau không có listener!
+
+// ✅ TỐT: Event Delegation
+document.getElementById('todoList').addEventListener('click', (e) =&gt; {
+  if (e.target.classList.contains('delete')) {
+    e.target.parentElement.remove();
+  }
+});
+
+// Thêm task mới → listener vẫn hoạt động!
+document.getElementById('addTask').addEventListener('click', () =&gt; {
+  const li = document.createElement('li');
+  li.innerHTML = `New Task &lt;button class="delete"&gt;Delete&lt;/button&gt;`;
+  document.getElementById('todoList').appendChild(li);
+});
+                    </div>
+
+                    <h4>🚀 Lợi ích khi tích hợp HTML/CSS:</h4>
+                    <ul>
+                        <li><strong>Performance:</strong> Chỉ 1 listener thay vì hàng trăm → tiết kiệm memory</li>
+                        <li><strong>Dynamic content:</strong> Hoạt động với elements được thêm sau (AJAX, templates)</li>
+                        <li><strong>Cleaner code:</strong> Không cần attach/detach listeners khi add/remove elements</li>
+                        <li><strong>CSS animations:</strong> Không bị mất listener khi element re-render</li>
+                    </ul>
+
+                    <h4>⚡ Tối ưu hiệu suất:</h4>
+                    <ul>
+                        <li>Gắn listener ở level cao nhất có thể (ví dụ: table thay vì từng cell)</li>
+                        <li>Dùng <code>e.stopPropagation()</code> khi cần ngăn bubbling</li>
+                        <li>Check <code>e.target</code> cẩn thận để tránh trigger nhầm</li>
+                        <li>Kết hợp với data attributes để easy target: <code>data-action="delete"</code></li>
+                    </ul>
+                </div>
+            </section>
+        </main>
+
+        <footer>
+            <p>&copy; 2026 - Giới thiệu | 710-MSSV</p>
+        </footer>
+    </div>
+
+    <script src="js/script.js"></script>
+</body>
+</html>

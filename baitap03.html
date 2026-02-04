@@ -1,0 +1,549 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bài tập 3: Countdown Timer - 710-MSSV</title>
+    <link rel="stylesheet" href="css/style.css">
+    <style>
+        .timer-container {
+            max-width: 800px;
+            margin: 40px auto;
+            text-align: center;
+        }
+
+        .timer-display {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 60px 40px;
+            border-radius: 20px;
+            box-shadow: 0 15px 40px rgba(102, 126, 234, 0.4);
+            margin-bottom: 30px;
+        }
+
+        .timer-label {
+            font-size: 1.5em;
+            margin-bottom: 20px;
+            opacity: 0.9;
+        }
+
+        .timer-time {
+            font-size: 8em;
+            font-weight: bold;
+            font-family: 'Courier New', monospace;
+            letter-spacing: 10px;
+            margin: 20px 0;
+            text-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+        }
+
+        .timer-warning {
+            animation: pulse 1s infinite;
+            background: linear-gradient(135deg, #e74c3c 0%, #c0392b 100%);
+        }
+
+        .timer-description {
+            font-size: 1.2em;
+            opacity: 0.8;
+        }
+
+        .timer-controls {
+            display: flex;
+            gap: 15px;
+            justify-content: center;
+            flex-wrap: wrap;
+            margin-top: 30px;
+        }
+
+        .timer-controls button {
+            padding: 15px 40px;
+            font-size: 1.1em;
+            min-width: 150px;
+        }
+
+        .btn-start {
+            background: linear-gradient(135deg, #27ae60 0%, #229954 100%);
+        }
+
+        .btn-pause {
+            background: linear-gradient(135deg, #f39c12 0%, #e67e22 100%);
+        }
+
+        .btn-reset {
+            background: linear-gradient(135deg, #e74c3c 0%, #c0392b 100%);
+        }
+
+        .timer-settings {
+            background: #f8f9fa;
+            padding: 30px;
+            border-radius: 15px;
+            margin-top: 40px;
+        }
+
+        .timer-settings h3 {
+            color: #667eea;
+            margin-bottom: 20px;
+        }
+
+        .settings-group {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 15px;
+            margin-top: 20px;
+        }
+
+        .settings-group input {
+            width: 100px;
+            text-align: center;
+        }
+
+        /* Modal styles */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.7);
+            animation: fadeIn 0.3s ease;
+        }
+
+        .modal.show {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .modal-content {
+            background: white;
+            padding: 40px;
+            border-radius: 20px;
+            text-align: center;
+            max-width: 500px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            animation: scaleIn 0.3s ease;
+        }
+
+        @keyframes scaleIn {
+            from {
+                transform: scale(0.8);
+                opacity: 0;
+            }
+            to {
+                transform: scale(1);
+                opacity: 1;
+            }
+        }
+
+        .modal-content h2 {
+            color: #e74c3c;
+            font-size: 3em;
+            margin-bottom: 20px;
+        }
+
+        .modal-content p {
+            font-size: 1.3em;
+            margin-bottom: 30px;
+            color: #666;
+        }
+
+        .modal-close {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            padding: 15px 40px;
+            font-size: 1.1em;
+        }
+
+        .timer-stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 20px;
+            margin-top: 40px;
+        }
+
+        .stat-box {
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 3px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .stat-box h4 {
+            color: #667eea;
+            margin-bottom: 10px;
+            font-size: 0.9em;
+        }
+
+        .stat-box .stat-value {
+            font-size: 2em;
+            font-weight: bold;
+            color: #333;
+        }
+
+        .explanation {
+            background: #e8f4f8;
+            border-left: 5px solid #667eea;
+            padding: 20px;
+            margin: 30px 0;
+            border-radius: 5px;
+        }
+
+        .explanation h3 {
+            color: #667eea;
+            margin-bottom: 15px;
+        }
+
+        .explanation ul {
+            margin-left: 20px;
+            line-height: 1.8;
+        }
+
+        @media (max-width: 768px) {
+            .timer-time {
+                font-size: 4em;
+                letter-spacing: 5px;
+            }
+
+            .timer-controls {
+                flex-direction: column;
+            }
+
+            .timer-controls button {
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>⏰ Bài tập 3: Countdown Timer</h1>
+            <p>Đồng hồ đếm ngược 10 phút</p>
+        </header>
+
+        <nav>
+            <ul>
+                <li><a href="index.html">🏠 Trang chủ</a></li>
+                <li><a href="baitap01.html">📦 Bài 1: Sản phẩm</a></li>
+                <li><a href="baitap02.html">📝 Bài 2: Form đăng ký</a></li>
+                <li><a href="baitap03.html">⏱️ Bài 3: Countdown</a></li>
+                <li><a href="about.html">ℹ️ Giới thiệu</a></li>
+                <li><a href="contact.html">📧 Liên hệ</a></li>
+            </ul>
+        </nav>
+
+        <main>
+            <div class="timer-container fade-in">
+                <div class="timer-display" id="timerDisplay">
+                    <div class="timer-label">⏱️ Thời gian còn lại</div>
+                    <div class="timer-time" id="timerTime">10:00</div>
+                    <div class="timer-description" id="timerStatus">Nhấn Start để bắt đầu đếm ngược</div>
+                </div>
+
+                <div class="timer-controls">
+                    <button class="btn-start" id="startBtn">▶️ Start</button>
+                    <button class="btn-pause" id="pauseBtn" disabled>⏸️ Pause</button>
+                    <button class="btn-reset" id="resetBtn">🔄 Reset</button>
+                </div>
+
+                <div class="timer-settings">
+                    <h3>⚙️ Cài đặt thời gian</h3>
+                    <div class="settings-group">
+                        <label for="minutesInput">Phút:</label>
+                        <input type="number" id="minutesInput" value="10" min="0" max="60">
+                        <label for="secondsInput">Giây:</label>
+                        <input type="number" id="secondsInput" value="0" min="0" max="59">
+                        <button onclick="applySettings()">Áp dụng</button>
+                    </div>
+                </div>
+
+                <div class="timer-stats">
+                    <div class="stat-box">
+                        <h4>Số lần khởi động</h4>
+                        <div class="stat-value" id="startCount">0</div>
+                    </div>
+                    <div class="stat-box">
+                        <h4>Tổng thời gian chạy</h4>
+                        <div class="stat-value" id="totalTimeRun">0:00</div>
+                    </div>
+                    <div class="stat-box">
+                        <h4>Trạng thái</h4>
+                        <div class="stat-value" id="timerState">Stopped</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="explanation">
+                <h3>💡 Logic tư duy lập trình</h3>
+                <h4>1. Xử lý interval để tránh memory leak:</h4>
+                <ul>
+                    <li><strong>clearInterval():</strong> Luôn clear interval trước khi tạo mới để tránh multiple timers</li>
+                    <li><strong>Global variable:</strong> Lưu intervalId ở scope global để có thể clear từ bất kỳ function nào</li>
+                    <li><strong>Check existence:</strong> Kiểm tra interval đã tồn tại trước khi start/pause</li>
+                </ul>
+
+                <h4>2. Tính toán thời gian chính xác:</h4>
+                <ul>
+                    <li><strong>Seconds-based:</strong> Lưu thời gian dưới dạng giây để tính toán dễ dàng</li>
+                    <li><strong>Format MM:SS:</strong> Sử dụng Math.floor() và modulo (%) để chuyển đổi</li>
+                    <li><strong>padStart():</strong> Đảm bảo luôn hiển thị 2 chữ số (01, 02... thay vì 1, 2...)</li>
+                </ul>
+
+                <h4>3. Animation và UX:</h4>
+                <ul>
+                    <li><strong>CSS Animation:</strong> Sử dụng @keyframes pulse khi dưới 1 phút</li>
+                    <li><strong>Dynamic class:</strong> Thêm/xóa class để trigger animation</li>
+                    <li><strong>Visual feedback:</strong> Đổi màu nền khi cảnh báo thời gian</li>
+                </ul>
+
+                <h4>4. Tích hợp Domain/Hosting:</h4>
+                <ul>
+                    <li><strong>Không cần server:</strong> Timer chạy hoàn toàn client-side với JavaScript</li>
+                    <li><strong>Static hosting:</strong> Deploy dễ dàng lên GitHub Pages, Netlify, Vercel</li>
+                    <li><strong>Đồng bộ thời gian:</strong> Trong production, có thể sync với server time qua API</li>
+                    <li><strong>Offline-capable:</strong> Hoạt động ngay cả khi offline (PWA)</li>
+                </ul>
+
+                <h4>5. Best practices:</h4>
+                <ul>
+                    <li>Disable/Enable buttons theo trạng thái timer</li>
+                    <li>Modal alert thay vì alert() native để UX tốt hơn</li>
+                    <li>Responsive design cho mobile</li>
+                    <li>Tracking statistics (số lần start, tổng thời gian...)</li>
+                </ul>
+            </div>
+        </main>
+
+        <footer>
+            <p>&copy; 2026 - Bài tập 3: Countdown Timer | 710-MSSV</p>
+        </footer>
+    </div>
+
+    <!-- Modal hết thời gian -->
+    <div id="timeUpModal" class="modal">
+        <div class="modal-content">
+            <h2>⏰</h2>
+            <p><strong>Hết thời gian!</strong></p>
+            <p>Đồng hồ đếm ngược đã kết thúc.</p>
+            <button class="modal-close" onclick="closeModal()">Đóng</button>
+        </div>
+    </div>
+
+    <script src="js/script.js"></script>
+    <script>
+        // ===== GLOBAL VARIABLES =====
+        let totalSeconds = 10 * 60; // 10 phút = 600 giây
+        let remainingSeconds = totalSeconds;
+        let intervalId = null;
+        let isRunning = false;
+        let isPaused = false;
+        let startCount = 0;
+        let totalTimeElapsed = 0;
+
+        // ===== DOM ELEMENTS =====
+        const timerTime = document.getElementById('timerTime');
+        const timerDisplay = document.getElementById('timerDisplay');
+        const timerStatus = document.getElementById('timerStatus');
+        const startBtn = document.getElementById('startBtn');
+        const pauseBtn = document.getElementById('pauseBtn');
+        const resetBtn = document.getElementById('resetBtn');
+        const modal = document.getElementById('timeUpModal');
+
+        // ===== FORMAT TIME MM:SS =====
+        function formatTime(seconds) {
+            const minutes = Math.floor(seconds / 60);
+            const secs = seconds % 60;
+            return `${String(minutes).padStart(2, '0')}:${String(secs).padStart(2, '0')}`;
+        }
+
+        // ===== UPDATE DISPLAY =====
+        function updateDisplay() {
+            timerTime.textContent = formatTime(remainingSeconds);
+            
+            // Animation cảnh báo khi dưới 1 phút (60 giây)
+            if (remainingSeconds <= 60 && remainingSeconds > 0) {
+                timerDisplay.classList.add('timer-warning');
+                timerStatus.textContent = '⚠️ Thời gian sắp hết!';
+            } else if (remainingSeconds > 60) {
+                timerDisplay.classList.remove('timer-warning');
+                timerStatus.textContent = isRunning ? 'Đang đếm ngược...' : 'Tạm dừng';
+            }
+
+            // Update stats
+            updateStats();
+        }
+
+        // ===== UPDATE STATISTICS =====
+        function updateStats() {
+            document.getElementById('startCount').textContent = startCount;
+            document.getElementById('totalTimeRun').textContent = formatTime(totalTimeElapsed);
+            document.getElementById('timerState').textContent = 
+                isRunning ? 'Running' : (isPaused ? 'Paused' : 'Stopped');
+        }
+
+        // ===== START TIMER =====
+        function startTimer() {
+            if (isRunning) return; // Đã chạy rồi thì không start nữa
+
+            isRunning = true;
+            isPaused = false;
+            startCount++;
+            
+            startBtn.disabled = true;
+            pauseBtn.disabled = false;
+            
+            timerStatus.textContent = 'Đang đếm ngược...';
+
+            // Clear interval cũ (nếu có) để tránh memory leak
+            if (intervalId) {
+                clearInterval(intervalId);
+            }
+
+            // Tạo interval mới
+            intervalId = setInterval(() => {
+                remainingSeconds--;
+                totalTimeElapsed++;
+                updateDisplay();
+
+                // Kiểm tra hết thời gian
+                if (remainingSeconds <= 0) {
+                    stopTimer();
+                    showTimeUpModal();
+                }
+            }, 1000);
+
+            updateStats();
+        }
+
+        // ===== PAUSE TIMER =====
+        function pauseTimer() {
+            if (!isRunning) return;
+
+            isRunning = false;
+            isPaused = true;
+
+            // Clear interval để tránh memory leak
+            if (intervalId) {
+                clearInterval(intervalId);
+                intervalId = null;
+            }
+
+            startBtn.disabled = false;
+            pauseBtn.disabled = true;
+            startBtn.textContent = '▶️ Resume';
+            
+            timerStatus.textContent = 'Tạm dừng';
+            updateStats();
+        }
+
+        // ===== STOP TIMER =====
+        function stopTimer() {
+            isRunning = false;
+            isPaused = false;
+
+            // Clear interval để tránh memory leak
+            if (intervalId) {
+                clearInterval(intervalId);
+                intervalId = null;
+            }
+
+            startBtn.disabled = false;
+            pauseBtn.disabled = true;
+            
+            updateStats();
+        }
+
+        // ===== RESET TIMER =====
+        function resetTimer() {
+            stopTimer();
+            
+            remainingSeconds = totalSeconds;
+            startBtn.textContent = '▶️ Start';
+            timerDisplay.classList.remove('timer-warning');
+            timerStatus.textContent = 'Nhấn Start để bắt đầu đếm ngược';
+            
+            updateDisplay();
+        }
+
+        // ===== APPLY SETTINGS =====
+        function applySettings() {
+            if (isRunning) {
+                showMessage('Vui lòng dừng timer trước khi thay đổi cài đặt!', 'error');
+                return;
+            }
+
+            const minutes = parseInt(document.getElementById('minutesInput').value) || 0;
+            const seconds = parseInt(document.getElementById('secondsInput').value) || 0;
+
+            if (minutes < 0 || minutes > 60 || seconds < 0 || seconds > 59) {
+                showMessage('Giá trị không hợp lệ! Phút: 0-60, Giây: 0-59', 'error');
+                return;
+            }
+
+            totalSeconds = minutes * 60 + seconds;
+            
+            if (totalSeconds === 0) {
+                showMessage('Thời gian phải lớn hơn 0!', 'error');
+                return;
+            }
+
+            remainingSeconds = totalSeconds;
+            updateDisplay();
+            showMessage(`Đã cài đặt thời gian: ${formatTime(totalSeconds)}`, 'success');
+        }
+
+        // ===== SHOW TIME UP MODAL =====
+        function showTimeUpModal() {
+            modal.classList.add('show');
+            
+            // Play sound (optional - có thể thêm audio)
+            // const audio = new Audio('alarm.mp3');
+            // audio.play();
+        }
+
+        // ===== CLOSE MODAL =====
+        function closeModal() {
+            modal.classList.remove('show');
+            resetTimer();
+        }
+
+        // ===== EVENT LISTENERS =====
+        startBtn.addEventListener('click', startTimer);
+        pauseBtn.addEventListener('click', pauseTimer);
+        resetBtn.addEventListener('click', resetTimer);
+
+        // Click ngoài modal để đóng
+        modal.addEventListener('click', (e) => {
+            if (e.target === modal) {
+                closeModal();
+            }
+        });
+
+        // Keyboard shortcuts
+        document.addEventListener('keydown', (e) => {
+            if (e.key === ' ' || e.key === 'Spacebar') {
+                e.preventDefault();
+                if (isRunning) {
+                    pauseTimer();
+                } else {
+                    startTimer();
+                }
+            } else if (e.key === 'r' || e.key === 'R') {
+                resetTimer();
+            }
+        });
+
+        // ===== CLEANUP ON PAGE UNLOAD =====
+        window.addEventListener('beforeunload', () => {
+            // Clear interval khi rời khỏi trang để tránh memory leak
+            if (intervalId) {
+                clearInterval(intervalId);
+            }
+        });
+
+        // ===== INIT =====
+        updateDisplay();
+    </script>
+</body>
+</html>

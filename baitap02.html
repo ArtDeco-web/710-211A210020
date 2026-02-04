@@ -1,0 +1,663 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bài tập 2: Form đăng ký - 710-MSSV</title>
+    <link rel="stylesheet" href="css/style.css">
+    <style>
+        .form-container {
+            max-width: 600px;
+            margin: 40px auto;
+            background: white;
+            padding: 40px;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+        }
+
+        .form-header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .form-header h2 {
+            color: #667eea;
+            font-size: 2em;
+            margin-bottom: 10px;
+        }
+
+        .form-group {
+            margin-bottom: 25px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: #333;
+        }
+
+        .form-group label .required {
+            color: #e74c3c;
+        }
+
+        .form-group input {
+            width: 100%;
+            padding: 12px 15px;
+            border: 2px solid #ddd;
+            border-radius: 8px;
+            font-size: 16px;
+            transition: all 0.3s ease;
+        }
+
+        .form-group input:focus {
+            border-color: #667eea;
+            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+        }
+
+        .form-group input.invalid {
+            border-color: #e74c3c;
+        }
+
+        .form-group input.valid {
+            border-color: #27ae60;
+        }
+
+        .error-message {
+            color: #e74c3c;
+            font-size: 14px;
+            margin-top: 5px;
+            display: none;
+        }
+
+        .error-message.show {
+            display: block;
+        }
+
+        .checkbox-group {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .checkbox-group input[type="checkbox"] {
+            width: auto;
+            cursor: pointer;
+        }
+
+        .checkbox-group label {
+            margin-bottom: 0;
+            cursor: pointer;
+            font-weight: normal;
+        }
+
+        .submit-btn {
+            width: 100%;
+            padding: 15px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 18px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .submit-btn:hover:not(:disabled) {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 20px rgba(102, 126, 234, 0.4);
+        }
+
+        .submit-btn:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+        }
+
+        .password-strength {
+            margin-top: 8px;
+            height: 5px;
+            background: #ddd;
+            border-radius: 3px;
+            overflow: hidden;
+        }
+
+        .password-strength-bar {
+            height: 100%;
+            width: 0;
+            transition: all 0.3s ease;
+        }
+
+        .strength-weak { background: #e74c3c; width: 33%; }
+        .strength-medium { background: #f39c12; width: 66%; }
+        .strength-strong { background: #27ae60; width: 100%; }
+
+        .password-requirements {
+            margin-top: 10px;
+            font-size: 14px;
+            color: #666;
+        }
+
+        .password-requirements ul {
+            margin-left: 20px;
+            margin-top: 5px;
+        }
+
+        .password-requirements li {
+            margin-bottom: 3px;
+        }
+
+        .requirement-met {
+            color: #27ae60;
+        }
+
+        .requirement-unmet {
+            color: #e74c3c;
+        }
+
+        .registered-users {
+            margin-top: 40px;
+            padding: 30px;
+            background: #f8f9fa;
+            border-radius: 10px;
+        }
+
+        .registered-users h3 {
+            color: #667eea;
+            margin-bottom: 20px;
+        }
+
+        .user-card {
+            background: white;
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 15px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+        }
+
+        .user-card strong {
+            color: #667eea;
+        }
+
+        .clear-storage-btn {
+            background: #e74c3c;
+            margin-top: 15px;
+        }
+
+        .clear-storage-btn:hover {
+            background: #c0392b;
+        }
+
+        .explanation {
+            background: #e8f4f8;
+            border-left: 5px solid #667eea;
+            padding: 20px;
+            margin: 30px 0;
+            border-radius: 5px;
+        }
+
+        .explanation h3 {
+            color: #667eea;
+            margin-bottom: 15px;
+        }
+
+        .explanation ul {
+            margin-left: 20px;
+            line-height: 1.8;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>📝 Bài tập 2: Form đăng ký người dùng</h1>
+            <p>Validation và lưu trữ LocalStorage</p>
+        </header>
+
+        <nav>
+            <ul>
+                <li><a href="index.html">🏠 Trang chủ</a></li>
+                <li><a href="baitap01.html">📦 Bài 1: Sản phẩm</a></li>
+                <li><a href="baitap02.html">📝 Bài 2: Form đăng ký</a></li>
+                <li><a href="baitap03.html">⏱️ Bài 3: Countdown</a></li>
+                <li><a href="about.html">ℹ️ Giới thiệu</a></li>
+                <li><a href="contact.html">📧 Liên hệ</a></li>
+            </ul>
+        </nav>
+
+        <main>
+            <div class="form-container fade-in">
+                <div class="form-header">
+                    <h2>🎯 Đăng ký tài khoản</h2>
+                    <p>Vui lòng điền đầy đủ thông tin bên dưới</p>
+                </div>
+
+                <form id="registrationForm">
+                    <div class="form-group">
+                        <label for="fullName">
+                            Họ và tên <span class="required">*</span>
+                        </label>
+                        <input 
+                            type="text" 
+                            id="fullName" 
+                            name="fullName" 
+                            placeholder="Nguyễn Văn A"
+                            required
+                        >
+                        <div class="error-message" id="nameError">Vui lòng nhập họ tên (ít nhất 2 ký tự)</div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="email">
+                            Email <span class="required">*</span>
+                        </label>
+                        <input 
+                            type="email" 
+                            id="email" 
+                            name="email" 
+                            placeholder="example@email.com"
+                            required
+                        >
+                        <div class="error-message" id="emailError">Email không hợp lệ</div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="password">
+                            Mật khẩu <span class="required">*</span>
+                        </label>
+                        <input 
+                            type="password" 
+                            id="password" 
+                            name="password" 
+                            placeholder="Nhập mật khẩu"
+                            required
+                        >
+                        <div class="password-strength">
+                            <div class="password-strength-bar" id="strengthBar"></div>
+                        </div>
+                        <div class="password-requirements">
+                            <strong>Yêu cầu mật khẩu:</strong>
+                            <ul id="passwordRequirements">
+                                <li class="requirement-unmet" id="req-length">✗ Ít nhất 8 ký tự</li>
+                                <li class="requirement-unmet" id="req-uppercase">✗ Có chữ hoa (A-Z)</li>
+                                <li class="requirement-unmet" id="req-lowercase">✗ Có chữ thường (a-z)</li>
+                                <li class="requirement-unmet" id="req-number">✗ Có số (0-9)</li>
+                            </ul>
+                        </div>
+                        <div class="error-message" id="passwordError">Mật khẩu không đáp ứng yêu cầu</div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="confirmPassword">
+                            Xác nhận mật khẩu <span class="required">*</span>
+                        </label>
+                        <input 
+                            type="password" 
+                            id="confirmPassword" 
+                            name="confirmPassword" 
+                            placeholder="Nhập lại mật khẩu"
+                            required
+                        >
+                        <div class="error-message" id="confirmPasswordError">Mật khẩu không khớp</div>
+                    </div>
+
+                    <div class="form-group checkbox-group">
+                        <input 
+                            type="checkbox" 
+                            id="agreeTerms" 
+                            name="agreeTerms"
+                            required
+                        >
+                        <label for="agreeTerms">
+                            Tôi đồng ý với <a href="#" style="color: #667eea;">Điều khoản sử dụng</a> <span class="required">*</span>
+                        </label>
+                    </div>
+                    <div class="error-message" id="termsError">Bạn phải đồng ý với điều khoản</div>
+
+                    <button type="submit" class="submit-btn">
+                        Đăng ký ngay
+                    </button>
+                </form>
+            </div>
+
+            <div class="registered-users" id="registeredUsersSection" style="display: none;">
+                <h3>👥 Danh sách người dùng đã đăng ký</h3>
+                <div id="usersList"></div>
+                <button class="submit-btn clear-storage-btn" id="clearStorageBtn">
+                    🗑️ Xóa tất cả dữ liệu
+                </button>
+            </div>
+
+            <div class="explanation">
+                <h3>💡 Logic tư duy lập trình</h3>
+                <h4>1. Xử lý sự kiện Submit:</h4>
+                <ul>
+                    <li><strong>preventDefault():</strong> Ngăn form reload trang khi submit</li>
+                    <li><strong>Real-time validation:</strong> Kiểm tra input ngay khi người dùng nhập</li>
+                    <li><strong>Visual feedback:</strong> Hiển thị lỗi/thành công bằng màu sắc và thông báo</li>
+                </ul>
+
+                <h4>2. Validation logic:</h4>
+                <ul>
+                    <li><strong>Email:</strong> Sử dụng Regex pattern để kiểm tra format email hợp lệ</li>
+                    <li><strong>Password:</strong> Kiểm tra độ dài ≥8, có chữ hoa/thường/số bằng Regex</li>
+                    <li><strong>Password strength:</strong> Tính độ mạnh và hiển thị progress bar trực quan</li>
+                    <li><strong>Confirm password:</strong> So sánh với mật khẩu gốc</li>
+                </ul>
+
+                <h4>3. Bảo mật dữ liệu cục bộ (LocalStorage):</h4>
+                <ul>
+                    <li><strong>Không lưu plain password:</strong> Trong thực tế cần hash password (bcrypt, SHA-256)</li>
+                    <li><strong>JSON stringify/parse:</strong> Chuyển đổi object thành string để lưu</li>
+                    <li><strong>Array storage:</strong> Lưu nhiều user dưới dạng array trong LocalStorage</li>
+                    <li><strong>Timestamp:</strong> Lưu thời gian đăng ký để tracking</li>
+                </ul>
+
+                <h4>4. Best practices:</h4>
+                <ul>
+                    <li>Sanitize input trước khi hiển thị để tránh XSS</li>
+                    <li>Disable submit button khi đang xử lý để tránh double submit</li>
+                    <li>Clear form sau khi đăng ký thành công</li>
+                    <li>Responsive design cho mobile devices</li>
+                </ul>
+            </div>
+        </main>
+
+        <footer>
+            <p>&copy; 2026 - Bài tập 2: Form đăng ký | 710-MSSV</p>
+        </footer>
+    </div>
+
+    <script src="js/script.js"></script>
+    <script>
+        // ===== VALIDATE EMAIL =====
+        function isValidEmail(email) {
+            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            return emailRegex.test(email);
+        }
+
+        // ===== VALIDATE PASSWORD =====
+        function isValidPassword(password) {
+            const hasUpperCase = /[A-Z]/.test(password);
+            const hasLowerCase = /[a-z]/.test(password);
+            const hasNumber = /[0-9]/.test(password);
+            const isLengthValid = password.length >= 8;
+            
+            return hasUpperCase && hasLowerCase && hasNumber && isLengthValid;
+        }
+
+        // ===== CHECK PASSWORD STRENGTH =====
+        function checkPasswordStrength(password) {
+            let strength = 0;
+            const strengthBar = document.getElementById('strengthBar');
+            
+            // Update requirements
+            const reqLength = document.getElementById('req-length');
+            const reqUppercase = document.getElementById('req-uppercase');
+            const reqLowercase = document.getElementById('req-lowercase');
+            const reqNumber = document.getElementById('req-number');
+
+            // Check length
+            if (password.length >= 8) {
+                strength += 25;
+                reqLength.className = 'requirement-met';
+                reqLength.textContent = '✓ Ít nhất 8 ký tự';
+            } else {
+                reqLength.className = 'requirement-unmet';
+                reqLength.textContent = '✗ Ít nhất 8 ký tự';
+            }
+
+            // Check uppercase
+            if (/[A-Z]/.test(password)) {
+                strength += 25;
+                reqUppercase.className = 'requirement-met';
+                reqUppercase.textContent = '✓ Có chữ hoa (A-Z)';
+            } else {
+                reqUppercase.className = 'requirement-unmet';
+                reqUppercase.textContent = '✗ Có chữ hoa (A-Z)';
+            }
+
+            // Check lowercase
+            if (/[a-z]/.test(password)) {
+                strength += 25;
+                reqLowercase.className = 'requirement-met';
+                reqLowercase.textContent = '✓ Có chữ thường (a-z)';
+            } else {
+                reqLowercase.className = 'requirement-unmet';
+                reqLowercase.textContent = '✗ Có chữ thường (a-z)';
+            }
+
+            // Check number
+            if (/[0-9]/.test(password)) {
+                strength += 25;
+                reqNumber.className = 'requirement-met';
+                reqNumber.textContent = '✓ Có số (0-9)';
+            } else {
+                reqNumber.className = 'requirement-unmet';
+                reqNumber.textContent = '✗ Có số (0-9)';
+            }
+
+            // Update strength bar
+            strengthBar.className = 'password-strength-bar';
+            if (strength <= 25) {
+                strengthBar.classList.add('strength-weak');
+            } else if (strength <= 75) {
+                strengthBar.classList.add('strength-medium');
+            } else {
+                strengthBar.classList.add('strength-strong');
+            }
+        }
+
+        // ===== SHOW ERROR =====
+        function showError(inputId, errorId, message) {
+            const input = document.getElementById(inputId);
+            const error = document.getElementById(errorId);
+            
+            input.classList.add('invalid');
+            input.classList.remove('valid');
+            error.textContent = message;
+            error.classList.add('show');
+        }
+
+        // ===== HIDE ERROR =====
+        function hideError(inputId, errorId) {
+            const input = document.getElementById(inputId);
+            const error = document.getElementById(errorId);
+            
+            input.classList.remove('invalid');
+            input.classList.add('valid');
+            error.classList.remove('show');
+        }
+
+        // ===== SAVE TO LOCALSTORAGE =====
+        function saveToLocalStorage(userData) {
+            // Lấy danh sách user hiện tại
+            let users = JSON.parse(localStorage.getItem('registeredUsers')) || [];
+            
+            // Kiểm tra email đã tồn tại
+            const emailExists = users.some(user => user.email === userData.email);
+            if (emailExists) {
+                showMessage('Email này đã được đăng ký!', 'error');
+                return false;
+            }
+            
+            // Thêm timestamp
+            userData.registeredAt = new Date().toLocaleString('vi-VN');
+            
+            // Thêm user mới
+            users.push(userData);
+            
+            // Lưu vào LocalStorage
+            localStorage.setItem('registeredUsers', JSON.stringify(users));
+            
+            return true;
+        }
+
+        // ===== DISPLAY REGISTERED USERS =====
+        function displayRegisteredUsers() {
+            const users = JSON.parse(localStorage.getItem('registeredUsers')) || [];
+            const section = document.getElementById('registeredUsersSection');
+            const usersList = document.getElementById('usersList');
+
+            if (users.length === 0) {
+                section.style.display = 'none';
+                return;
+            }
+
+            section.style.display = 'block';
+            usersList.innerHTML = users.map((user, index) => `
+                <div class="user-card">
+                    <p><strong>Tên:</strong> ${sanitizeInput(user.fullName)}</p>
+                    <p><strong>Email:</strong> ${sanitizeInput(user.email)}</p>
+                    <p><strong>Thời gian:</strong> ${user.registeredAt}</p>
+                </div>
+            `).join('');
+        }
+
+        // ===== CLEAR LOCALSTORAGE =====
+        function clearLocalStorage() {
+            if (confirm('Bạn có chắc muốn xóa tất cả dữ liệu người dùng?')) {
+                localStorage.removeItem('registeredUsers');
+                displayRegisteredUsers();
+                showMessage('Đã xóa tất cả dữ liệu!', 'info');
+            }
+        }
+
+        // ===== FORM VALIDATION & SUBMIT =====
+        document.getElementById('registrationForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+
+            // Get form values
+            const fullName = document.getElementById('fullName').value.trim();
+            const email = document.getElementById('email').value.trim();
+            const password = document.getElementById('password').value;
+            const confirmPassword = document.getElementById('confirmPassword').value;
+            const agreeTerms = document.getElementById('agreeTerms').checked;
+
+            let isValid = true;
+
+            // Validate full name
+            if (fullName.length < 2) {
+                showError('fullName', 'nameError', 'Vui lòng nhập họ tên (ít nhất 2 ký tự)');
+                isValid = false;
+            } else {
+                hideError('fullName', 'nameError');
+            }
+
+            // Validate email
+            if (!isValidEmail(email)) {
+                showError('email', 'emailError', 'Email không hợp lệ');
+                isValid = false;
+            } else {
+                hideError('email', 'emailError');
+            }
+
+            // Validate password
+            if (!isValidPassword(password)) {
+                showError('password', 'passwordError', 'Mật khẩu không đáp ứng yêu cầu');
+                isValid = false;
+            } else {
+                hideError('password', 'passwordError');
+            }
+
+            // Validate confirm password
+            if (password !== confirmPassword) {
+                showError('confirmPassword', 'confirmPasswordError', 'Mật khẩu không khớp');
+                isValid = false;
+            } else {
+                hideError('confirmPassword', 'confirmPasswordError');
+            }
+
+            // Validate terms
+            const termsError = document.getElementById('termsError');
+            if (!agreeTerms) {
+                termsError.classList.add('show');
+                isValid = false;
+            } else {
+                termsError.classList.remove('show');
+            }
+
+            // If all valid, save to LocalStorage
+            if (isValid) {
+                const userData = {
+                    fullName: fullName,
+                    email: email,
+                    // Trong thực tế KHÔNG NÊN lưu password plain text
+                    // Đây chỉ là demo, nên lưu password hash
+                    passwordHash: btoa(password) // Base64 encode (chỉ demo, không an toàn)
+                };
+
+                if (saveToLocalStorage(userData)) {
+                    showMessage('🎉 Đăng ký thành công! Dữ liệu đã được lưu vào LocalStorage.', 'success');
+                    
+                    // Reset form
+                    this.reset();
+                    document.querySelectorAll('input').forEach(input => {
+                        input.classList.remove('valid', 'invalid');
+                    });
+                    
+                    // Reset password strength
+                    document.getElementById('strengthBar').className = 'password-strength-bar';
+                    document.querySelectorAll('.requirement-met').forEach(el => {
+                        el.className = 'requirement-unmet';
+                        el.textContent = el.textContent.replace('✓', '✗');
+                    });
+
+                    // Display updated users list
+                    displayRegisteredUsers();
+                }
+            } else {
+                showMessage('❌ Vui lòng kiểm tra lại thông tin!', 'error');
+            }
+        });
+
+        // ===== REAL-TIME VALIDATION =====
+        document.getElementById('fullName').addEventListener('input', function() {
+            if (this.value.trim().length >= 2) {
+                hideError('fullName', 'nameError');
+            }
+        });
+
+        document.getElementById('email').addEventListener('input', function() {
+            if (isValidEmail(this.value.trim())) {
+                hideError('email', 'emailError');
+            }
+        });
+
+        document.getElementById('password').addEventListener('input', function() {
+            checkPasswordStrength(this.value);
+            if (isValidPassword(this.value)) {
+                hideError('password', 'passwordError');
+            }
+            
+            // Check confirm password match
+            const confirmPassword = document.getElementById('confirmPassword').value;
+            if (confirmPassword && this.value === confirmPassword) {
+                hideError('confirmPassword', 'confirmPasswordError');
+            }
+        });
+
+        document.getElementById('confirmPassword').addEventListener('input', function() {
+            const password = document.getElementById('password').value;
+            if (this.value === password) {
+                hideError('confirmPassword', 'confirmPasswordError');
+            }
+        });
+
+        document.getElementById('agreeTerms').addEventListener('change', function() {
+            const termsError = document.getElementById('termsError');
+            if (this.checked) {
+                termsError.classList.remove('show');
+            }
+        });
+
+        // ===== CLEAR STORAGE BUTTON =====
+        document.getElementById('clearStorageBtn').addEventListener('click', clearLocalStorage);
+
+        // ===== INIT =====
+        document.addEventListener('DOMContentLoaded', () => {
+            displayRegisteredUsers();
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,364 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bài tập 1: Danh sách sản phẩm - 710-MSSV</title>
+    <link rel="stylesheet" href="css/style.css">
+    <style>
+        .search-section {
+            margin-bottom: 30px;
+            text-align: center;
+        }
+
+        .search-box {
+            display: flex;
+            gap: 10px;
+            max-width: 600px;
+            margin: 20px auto;
+        }
+
+        .search-box input {
+            flex: 1;
+        }
+
+        .search-box button {
+            padding: 12px 30px;
+        }
+
+        .products-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 25px;
+            margin: 30px 0;
+        }
+
+        .product-card {
+            background: white;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 3px 15px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+        }
+
+        .product-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 8px 25px rgba(102, 126, 234, 0.3);
+        }
+
+        .product-image {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+            background: #f0f0f0;
+        }
+
+        .product-info {
+            padding: 20px;
+        }
+
+        .product-name {
+            font-size: 1.2em;
+            color: #333;
+            margin-bottom: 10px;
+            font-weight: 600;
+        }
+
+        .product-category {
+            display: inline-block;
+            background: #667eea;
+            color: white;
+            padding: 5px 12px;
+            border-radius: 15px;
+            font-size: 0.85em;
+            margin-bottom: 10px;
+        }
+
+        .product-price {
+            font-size: 1.4em;
+            color: #e74c3c;
+            font-weight: bold;
+            margin-top: 10px;
+        }
+
+        .no-results {
+            text-align: center;
+            padding: 60px 20px;
+            color: #666;
+        }
+
+        .no-results h3 {
+            font-size: 2em;
+            margin-bottom: 15px;
+        }
+
+        .stats {
+            display: flex;
+            justify-content: space-around;
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 10px;
+            margin-bottom: 30px;
+        }
+
+        .stat-item {
+            text-align: center;
+        }
+
+        .stat-number {
+            font-size: 2em;
+            color: #667eea;
+            font-weight: bold;
+        }
+
+        .stat-label {
+            color: #666;
+            margin-top: 5px;
+        }
+
+        .explanation {
+            background: #e8f4f8;
+            border-left: 5px solid #667eea;
+            padding: 20px;
+            margin: 30px 0;
+            border-radius: 5px;
+        }
+
+        .explanation h3 {
+            color: #667eea;
+            margin-bottom: 15px;
+        }
+
+        .explanation ul {
+            margin-left: 20px;
+            line-height: 1.8;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>🛒 Bài tập 1: Danh sách sản phẩm</h1>
+            <p>Tìm kiếm và hiển thị sản phẩm với JavaScript</p>
+        </header>
+
+        <nav>
+            <ul>
+                <li><a href="index.html">🏠 Trang chủ</a></li>
+                <li><a href="baitap01.html">📦 Bài 1: Sản phẩm</a></li>
+                <li><a href="baitap02.html">📝 Bài 2: Form đăng ký</a></li>
+                <li><a href="baitap03.html">⏱️ Bài 3: Countdown</a></li>
+                <li><a href="about.html">ℹ️ Giới thiệu</a></li>
+                <li><a href="contact.html">📧 Liên hệ</a></li>
+            </ul>
+        </nav>
+
+        <main>
+            <div class="stats fade-in">
+                <div class="stat-item">
+                    <div class="stat-number" id="totalProducts">0</div>
+                    <div class="stat-label">Tổng sản phẩm</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-number" id="displayedProducts">0</div>
+                    <div class="stat-label">Đang hiển thị</div>
+                </div>
+            </div>
+
+            <div class="search-section">
+                <h2>🔍 Tìm kiếm sản phẩm</h2>
+                <div class="search-box">
+                    <input 
+                        type="text" 
+                        id="searchInput" 
+                        placeholder="Nhập tên sản phẩm cần tìm..." 
+                        autocomplete="off"
+                    >
+                    <button id="searchBtn">Tìm kiếm</button>
+                    <button id="resetBtn" style="background: #95a5a6;">Reset</button>
+                </div>
+            </div>
+
+            <div id="productsContainer" class="products-grid"></div>
+
+            <div class="explanation">
+                <h3>💡 Logic tư duy lập trình</h3>
+                <h4>1. Xử lý Input người dùng:</h4>
+                <ul>
+                    <li><strong>Sanitization:</strong> Sử dụng textContent để tránh XSS injection</li>
+                    <li><strong>Case-insensitive search:</strong> Chuyển cả input và tên sản phẩm về toLowerCase()</li>
+                    <li><strong>Trim whitespace:</strong> Loại bỏ khoảng trắng thừa với trim()</li>
+                </ul>
+
+                <h4>2. Tối ưu tìm kiếm:</h4>
+                <ul>
+                    <li><strong>Array.filter():</strong> Sử dụng phương thức filter hiệu quả hơn vòng lặp for</li>
+                    <li><strong>includes():</strong> Tìm kiếm substring thay vì so sánh chính xác</li>
+                    <li><strong>Real-time search:</strong> Thêm event listener cho input để tìm kiếm ngay khi gõ</li>
+                </ul>
+
+                <h4>3. Xử lý lỗi và UX:</h4>
+                <ul>
+                    <li>Hiển thị thông báo rõ ràng khi không tìm thấy kết quả</li>
+                    <li>Cập nhật số lượng sản phẩm hiển thị real-time</li>
+                    <li>Responsive grid layout tự động điều chỉnh theo màn hình</li>
+                </ul>
+            </div>
+        </main>
+
+        <footer>
+            <p>&copy; 2026 - Bài tập 1: Danh sách sản phẩm | 710-MSSV</p>
+        </footer>
+    </div>
+
+    <script src="js/script.js"></script>
+    <script>
+        // ===== DANH SÁCH SẢN PHẨM =====
+        const products = [
+            { 
+                id: 1, 
+                name: 'Laptop Dell XPS 13', 
+                price: 25000000, 
+                category: 'Laptop', 
+                image: 'https://via.placeholder.com/280x200/667eea/ffffff?text=Dell+XPS+13'
+            },
+            { 
+                id: 2, 
+                name: 'iPhone 15 Pro Max', 
+                price: 30000000, 
+                category: 'Điện thoại', 
+                image: 'https://via.placeholder.com/280x200/764ba2/ffffff?text=iPhone+15+Pro'
+            },
+            { 
+                id: 3, 
+                name: 'Samsung Galaxy S24 Ultra', 
+                price: 28000000, 
+                category: 'Điện thoại', 
+                image: 'https://via.placeholder.com/280x200/f093fb/ffffff?text=Galaxy+S24'
+            },
+            { 
+                id: 4, 
+                name: 'MacBook Pro M3 16 inch', 
+                price: 55000000, 
+                category: 'Laptop', 
+                image: 'https://via.placeholder.com/280x200/4facfe/ffffff?text=MacBook+Pro'
+            },
+            { 
+                id: 5, 
+                name: 'iPad Air M2 2024', 
+                price: 18000000, 
+                category: 'Máy tính bảng', 
+                image: 'https://via.placeholder.com/280x200/00f2fe/ffffff?text=iPad+Air'
+            },
+            { 
+                id: 6, 
+                name: 'AirPods Pro Gen 2', 
+                price: 6500000, 
+                category: 'Phụ kiện', 
+                image: 'https://via.placeholder.com/280x200/43e97b/ffffff?text=AirPods+Pro'
+            },
+            { 
+                id: 7, 
+                name: 'Sony WH-1000XM5 Wireless', 
+                price: 9000000, 
+                category: 'Phụ kiện', 
+                image: 'https://via.placeholder.com/280x200/38f9d7/ffffff?text=Sony+XM5'
+            }
+        ];
+
+        // ===== FORMAT GIÁ TIỀN =====
+        function formatPrice(price) {
+            return new Intl.NumberFormat('vi-VN', {
+                style: 'currency',
+                currency: 'VND'
+            }).format(price);
+        }
+
+        // ===== HIỂN THỊ SẢN PHẨM =====
+        function displayProducts(productsToDisplay) {
+            const container = document.getElementById('productsContainer');
+            const displayedCount = document.getElementById('displayedProducts');
+
+            if (productsToDisplay.length === 0) {
+                container.innerHTML = `
+                    <div class="no-results fade-in">
+                        <h3>😢 Không tìm thấy sản phẩm</h3>
+                        <p>Không có sản phẩm nào phù hợp với từ khóa tìm kiếm của bạn.</p>
+                        <p>Vui lòng thử từ khóa khác hoặc reset để xem tất cả sản phẩm.</p>
+                    </div>
+                `;
+                displayedCount.textContent = '0';
+                return;
+            }
+
+            container.innerHTML = productsToDisplay.map(product => `
+                <div class="product-card fade-in">
+                    <img src="${product.image}" alt="${sanitizeInput(product.name)}" class="product-image">
+                    <div class="product-info">
+                        <span class="product-category">${sanitizeInput(product.category)}</span>
+                        <div class="product-name">${sanitizeInput(product.name)}</div>
+                        <div class="product-price">${formatPrice(product.price)}</div>
+                    </div>
+                </div>
+            `).join('');
+
+            displayedCount.textContent = productsToDisplay.length;
+        }
+
+        // ===== TÌM KIẾM SẢN PHẨM =====
+        function searchProducts() {
+            const searchInput = document.getElementById('searchInput');
+            const searchTerm = searchInput.value.trim().toLowerCase();
+
+            // Sanitize input để tránh XSS
+            if (searchTerm === '') {
+                displayProducts(products);
+                return;
+            }
+
+            // Filter sản phẩm (không phân biệt hoa thường)
+            const filteredProducts = products.filter(product => 
+                product.name.toLowerCase().includes(searchTerm) ||
+                product.category.toLowerCase().includes(searchTerm)
+            );
+
+            displayProducts(filteredProducts);
+
+            // Hiển thị thông báo
+            if (filteredProducts.length > 0) {
+                showMessage(`Tìm thấy ${filteredProducts.length} sản phẩm phù hợp!`, 'success');
+            } else {
+                showMessage('Không tìm thấy sản phẩm nào!', 'error');
+            }
+        }
+
+        // ===== RESET TÌM KIẾM =====
+        function resetSearch() {
+            document.getElementById('searchInput').value = '';
+            displayProducts(products);
+            showMessage('Đã reset danh sách sản phẩm!', 'info');
+        }
+
+        // ===== KHỞI TẠO =====
+        document.addEventListener('DOMContentLoaded', () => {
+            // Hiển thị tất cả sản phẩm ban đầu
+            displayProducts(products);
+            document.getElementById('totalProducts').textContent = products.length;
+
+            // Event listeners
+            document.getElementById('searchBtn').addEventListener('click', searchProducts);
+            document.getElementById('resetBtn').addEventListener('click', resetSearch);
+
+            // Tìm kiếm real-time khi gõ
+            document.getElementById('searchInput').addEventListener('input', searchProducts);
+
+            // Tìm kiếm khi nhấn Enter
+            document.getElementById('searchInput').addEventListener('keypress', (e) => {
+                if (e.key === 'Enter') {
+                    searchProducts();
+                }
+            });
+        });
+    </script>
+</body>
+</html>
